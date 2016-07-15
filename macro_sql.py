@@ -204,4 +204,82 @@ FROM numer_count LEFT JOIN numer_sum ON numer_count.arid = numer_sum.arid
 LEFT JOIN denom_count ON numer_count.arid = denom_count.arid
 LEFT JOIN denom_sum ON numer_count.arid = denom_sum.arid
 WHERE (numer_count/denom_count::real)*100 > 10 OR (numer_sum/denom_sum::real)*100 >10
-ORDER BY numer_count.agency ASC"""}
+ORDER BY numer_count.agency ASC;"""}
+
+Q031 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,COUNT(sequence) AS multi_count
+FROM hmdalar2014
+WHERE property_type = '3'
+GROUP BY agency, CONCAT(agency, RID)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,count(sequence) AS total_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, RID))
+
+SELECT numer.agency, numer.arid, numer.multi_count, denom.total_count
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE denom.total_count > 2000 AND numer.multi_count > 200;"""}
+
+Q047 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE preapproval = '1' AND action = '4'
+GROUP BY agency, CONCAT(agency, RID)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, RID))
+
+SELECT numer.agency, numer.arid, (numer_count/denom_count::real) *100 AS Q047
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::real)*100 > 10;"""}
+
+Q006 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) as numer_count
+FROM hmdalar2014
+WHERE action = '1' AND loan_purpose = '1'
+GROUP BY agency, CONCAT(agency, RID)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,COUNT(sequence) as denom_count
+FROM hmdalar2014
+WHERE loan_purpose = '1'
+GROUP BY agency, CONCAT(agency, rid))
+
+SELECT numer.agency, numer.arid, (numer_count/denom_count::real) *100
+FROM numer LEFT JOIN denom on numer.arid = denom.arid
+WHERE (numer_count/denom_count::real) * 100 > 95 AND numer_count > 25 ;"""}
+
+Q048 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) as numer_count
+FROM hmdalar2014
+WHERE action = '1' AND loan_purpose = '1'
+GROUP BY agency, CONCAT(agency, RID)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, RID) AS arid
+,COUNT(sequence) as denom_count
+FROM hmdalar2014
+WHERE loan_purpose = '1'
+GROUP BY agency, CONCAT(agency, rid))
+
+SELECT numer.agency, numer.arid, (numer_count/denom_count::real) *100
+FROM numer LEFT JOIN denom on numer.arid = denom.arid
+WHERE (numer_count/denom_count::real) * 100 > 95 AND numer_count > 25"""}
