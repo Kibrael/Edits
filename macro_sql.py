@@ -344,3 +344,87 @@ SELECT
 numer.agency, numer.arid, (numer_count/denom_count::REAL)*100
 FROM numer LEFT JOIN denom on numer.arid = denom.arid
 WHERE (numer_count/denom_count::REAL)*100 >15"""}
+
+Q010 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE action = '1'
+GROUP BY agency, CONCAT(agency, rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+WHERE action IN ('1','2','3','4','5','6')
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+numer.agency, numer.arid, (numer_count/denom_count::REAL)*100 < 20
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL) < 20"""}
+
+Q023 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE msa LIKE '%NA%'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+numer.agency, numer.arid, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL)*100 >30"""}
+
+Q011 = {"""WITH curr_year AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS curr_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, rid)),
+
+prev_year AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS prev_count
+FROM hmdalar2013
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+curr_year.agency, curr_year.arid, curr_count, prev_count, (curr_count/prev_count::REAL)*100
+FROM curr_year LEFT JOIN prev_year ON curr_year.arid = prev_year.arid
+WHERE ABS((curr_count/prev_count::REAL)*100) >20
+AND curr_count >=500
+AND prev_count >=500
+"""}
+
+Q016 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE income::INT < 10
+AND income NOT LIKE '%NA%'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL)*100 >20"""}
