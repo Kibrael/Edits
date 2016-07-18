@@ -428,3 +428,129 @@ SELECT
 numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE (numer_count/denom_count::REAL)*100 >20"""}
+
+Q053 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) as numer_count
+FROM hmdalar2014
+WHERE agency = '5'
+AND action = '1'
+AND hoepa = '1'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom on numer.arid = denom.arid
+WHERE
+(numer_count/denom_count::REAL)*100 > 1"""}
+
+Q054 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) as numer_count
+FROM hmdalar2014
+WHERE agency = '5'
+AND action = '6'
+AND hoepa = '1'
+GROUP BY agency, CONCAT(agency, rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL)*100 >1"""}
+
+Q062 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE action = '1'
+AND hoepa = '1'
+AND lien = '1'
+AND purchaser = '1'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL) *100 >1"""}
+
+Q063 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE action = '1'
+AND hoepa = '1'
+AND lien = '1'
+AND purchaser = '3'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency, rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL) *100 >1"""}
+
+Q065 = {"""SELECT
+agency
+,CONCAT(agency,rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE hoepa = '1'
+GROUP BY agency, CONCAT(agency, rid)
+
+HAVING COUNT(sequence) > 200"""}
+
+Q055 = {"""WITH numer AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) AS numer_count
+FROM hmdalar2014
+WHERE hoepa = '1'
+AND action = '1'
+AND rate_spread::REAL >= 5
+AND rate_spread NOT LIKE '%NA%'
+GROUP BY agency, CONCAT(agency,rid)),
+
+denom AS (SELECT
+agency
+,CONCAT(agency, rid) AS arid
+,COUNT(sequence) AS denom_count
+FROM hmdalar2014
+GROUP BY agency, CONCAT(agency,rid))
+
+SELECT
+numer.agency, numer.arid, numer_count, denom_count, (numer_count/denom_count::REAL)*100
+FROM numer LEFT JOIN denom ON numer.arid = denom.arid
+WHERE (numer_count/denom_count::REAL)*100 > 5
+"""}
+
