@@ -6,7 +6,7 @@ FROM hmdalar2014
 WHERE action IN ('1','6')
 AND loan_purpose IN ('1','3')
 AND property_type IN ('1','2')
-AND loan_type = '2'
+AND loan_type = '3'
 AND purchaser IN ('2')
 GROUP BY agency, CONCAT(agency,rid)),
 
@@ -17,7 +17,7 @@ agency
 FROM hmdalar2013
 WHERE action IN ('1','6')
 AND property_type In ('1','2')
-AND loan_type = '2'
+AND loan_type = '3'
 AND purchaser IN ('2')
 GROUP BY agency, CONCAT(agency,rid)),
 
@@ -29,7 +29,7 @@ FROM hmdalar2014
 WHERE action IN ('1','6')
 AND loan_purpose IN ('1','3')
 AND property_type IN ('1','2')
-AND loan_type = '2'
+AND loan_type = '3'
 GROUP BY agency, CONCAT(agency,rid)),
 
 denom_prev AS (SELECT
@@ -40,7 +40,7 @@ FROM hmdalar2013
 WHERE action IN ('1','6')
 AND loan_purpose IN ('1','3')
 AND property_type IN ('1','2')
-AND loan_type = '2'
+AND loan_type = '3'
 GROUP BY agency, CONCAT(agency,rid))
 
 SELECT
@@ -51,6 +51,6 @@ LEFT JOIN denom ON denom.arid = numer.arid
 LEFT JOIN denom_prev ON denom_prev.arid = numer.arid
 
 WHERE (CASE WHEN ABS(sold_prev/count_prev - sold/count_curr) > 10 THEN 1
-	    WHEN count_curr >=2500 AND ABS(((sold/count_curr::REAL)*100)) >30 THEN 1
+	    WHEN count_curr >=2000 AND ABS(((sold/count_curr::REAL)*100)) >30 THEN 1
 	    ELSE NULL END) IS NOT NULL
 ORDER BY pct_change asc
