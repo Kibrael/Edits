@@ -643,3 +643,4 @@ SELECT
 numer.agency, numer.arid, numer_count, denom_count
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE denom_count >=1000"""}
+
