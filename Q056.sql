@@ -7,6 +7,7 @@ WHERE loan_type = '1'
 AND loan_purpose = '1'
 AND action = '3'
 GROUP BY agency, CONCAT(agency,rid)),
+
 denom AS (SELECT
 agency
 ,CONCAT(agency,rid) AS arid
