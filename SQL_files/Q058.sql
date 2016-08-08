@@ -17,6 +17,6 @@ WHERE preapproval ='1'
 GROUP BY agency, CONCAT(agency,rid))
 
 SELECT
-numer.agency, numer.arid, numer_count, denom_count
+numer.agency, numer.arid, numer_count AS Q058, denom_count
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
-WHERE denom_count >=1000
+WHERE denom_count >=1000 AND numer_count <= 0

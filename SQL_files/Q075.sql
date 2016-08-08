@@ -42,9 +42,9 @@ AND property_type IN ('1','2')
 GROUP BY agency, CONCAT(agency, rid))
 
 SELECT
-numer.agency, numer.arid, numer_curr, denom_curr, numer_curr/denom_curr::REAL*100
-,numer_prev, denom_prev, numer_prev/denom_prev::REAL*100
-,(numer_curr/denom_curr::REAL*100 - numer_prev/denom_prev::REAL*100) AS pct_change_sold
+numer.agency, numer.arid, numer_curr, denom_curr, numer_curr/denom_curr::REAL*100 AS sold_curr
+,numer_prev, denom_prev, numer_prev/denom_prev::REAL*100 AS sold_prev
+,(numer_curr/denom_curr::REAL*100 - numer_prev/denom_prev::REAL*100) AS Q072
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 LEFT JOIN numer_prev ON numer.arid = numer_prev.arid
 LEFT JOIN denom_prev ON numer.arid = denom_prev.arid

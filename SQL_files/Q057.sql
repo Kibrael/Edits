@@ -16,6 +16,6 @@ GROUP BY agency, CONCAT(agency, rid))
 SELECT
 numer.agency, numer.arid, numer_count AS count_denied, denom_count AS total_count
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
-WHERE denom_count >=50
+WHERE denom_count >=50 AND numer_count <= 0
 
 

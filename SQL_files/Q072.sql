@@ -16,6 +16,7 @@ agency
 ,COUNT(sequence) AS sold_prev
 FROM hmdalar2013
 WHERE action IN ('1','6')
+AND loan_purpose IN ('1','3')
 AND property_type In ('1','2')
 AND loan_type = '3'
 AND purchaser IN ('2')
@@ -50,7 +51,11 @@ FROM numer LEFT JOIN numer_prev ON numer.arid = numer_prev.arid
 LEFT JOIN denom ON denom.arid = numer.arid
 LEFT JOIN denom_prev ON denom_prev.arid = numer.arid
 
-WHERE (CASE WHEN ABS(sold_prev/count_prev - sold/count_curr) > 10 THEN 1
-	    WHEN count_curr >=2000 AND ABS(((sold/count_curr::REAL)*100)) >30 THEN 1
+WHERE (CASE --WHEN (sold/count_curr < sold_prev/count_prev) AND ABS(sold - sold_prev/count_prev) >= 10 THEN 1
+	    WHEN (sold/count_curr < sold_prev/count_prev) AND ABS(sold/count_curr - sold_prev/count_prev) >=10 THEN 1
+	    WHEN count_curr >=2000 AND ABS(((sold/count_curr::REAL)*100)) >=30 THEN 1
 	    ELSE NULL END) IS NOT NULL
+	    
 ORDER BY pct_change asc
+
+

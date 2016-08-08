@@ -1,4 +1,4 @@
-﻿WITH numer AS (SELECT 
+﻿WITH numer AS (SELECT
 agency
 ,CONCAT(agency,rid) AS arid
 ,COUNT(sequence) AS numer_count
@@ -15,6 +15,6 @@ WHERE action IN ('1','2','3','4','5','6')
 GROUP BY agency, CONCAT(agency,rid))
 
 SELECT
-numer.agency, numer.arid, (numer_count/denom_count::REAL)*100 < 20
+numer.agency, numer.arid, (numer_count/denom_count::REAL)*100 < 20 AS Q010
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE (numer_count/denom_count::REAL) < 20
