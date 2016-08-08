@@ -5,7 +5,7 @@
 
 	{
 		"name": "Q001",
-		"text": "WHERE amount not like '%NA%' AND income not like '%NA%' AND amount::int >= 1000 AND (amount::int / income::int) < 5"
+		"text": "WHERE amount not like '%NA%' AND income not like '%NA%' AND amount::int >= 1000 AND (amount::int / income::int) <= 5"
 	},
 
 	{
@@ -20,7 +20,7 @@
 
 	{
 		"name": "Q004",
-		"text": "WHERE loan_type = '3' AND property_type IN ('1', '2') AND amount::INT >= 1050 AND amount NOT LIKE '%NA%'"
+		"text": "WHERE loan_type = '3' AND property_type IN ('1', '2') AND amount::INT > 1050 AND amount NOT LIKE '%NA%'"
 	},
 
 	{
@@ -56,12 +56,12 @@
 
 	{
 		"name": "Q068",
-		"text": "WHERE action IN ('1', '2', '3', '4', '5', '7', '8') AND ethnicity = '4' AND race = '7' AND sex = '4' AND co_ethnicity = '4' AND co_race1 = '7' AND co_sex = '4'"
+		"text": "WHERE action IN ('1', '2', '3', '4', '5', '7', '8') AND ethnicity = '4' AND race = '7' AND sex = '4' AND co_ethnicity != '5' AND co_race1 = '8' AND co_sex = '5'"
 	},
 
 	{
 		"name": "Q014",
-		"text": "WHERE income::INT > 3000 AND income NOT LIKE '%NA%'"
+		"text": "WHERE income::INT >= 3000 AND income NOT LIKE '%NA%'"
 	},
 
 	{
@@ -71,7 +71,7 @@
 
 	{
 		"name": "Q027",
-		"text": "WHERE action in ('1', '2', '3', '4', '5', '7', '8') AND property_type IN ('1', '2') AND income LIKE '%NA' "
+		"text": "WHERE action in ('1', '2', '3', '4', '5', '7', '8') AND property_type IN ('1', '2') AND income LIKE '%NA%' "
 	},
 
 	{
@@ -84,7 +84,7 @@
 	},
 	{
 		"name":"Q040",
-		"text":"WHERE purchaser IN ('1', '2', '3', '4') AND lien IN ('1', '2') AND (rate_spread LIKE '%NA% OR rate_spread::REAL <=10)"
+		"text":"WHERE purchaser IN ('1', '2', '3', '4') AND lien IN ('1', '2') AND (rate_spread LIKE '%NA% OR rate_spread::REAL > 10)"
 	},
 	{
 		"name":"Q066",
