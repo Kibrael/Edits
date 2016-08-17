@@ -45,14 +45,14 @@ AND loan_type = '1'
 GROUP BY agency, CONCAT(agency,rid))
 
 SELECT
-numer.agency, numer.arid, sold_prev, count_prev, sold, count_curr, (sold_prev/count_prev::REAL)*100 AS pct_sold_prev, (sold/count_curr::REAL)*100 AS pct_sold, 
-((sold-sold_prev)/sold_prev::REAL)*100 AS pct_change
-FROM numer LEFT JOIN numer_prev ON numer.arid = numer_prev.arid 
+numer.agency, numer.arid, sold_prev, count_prev, sold, count_curr, (sold_prev/count_prev::REAL)*100 AS pct_sold_prev, (sold/count_curr::REAL)*100 AS pct_sold,
+(sold/count_curr::REAL - sold_prev/count_prev::REAL) *100 AS Q070
+FROM numer LEFT JOIN numer_prev ON numer.arid = numer_prev.arid
 LEFT JOIN denom ON denom.arid = numer.arid
 LEFT JOIN denom_prev ON denom_prev.arid = numer.arid
 
 WHERE (CASE --WHEN (sold/count_curr < sold_prev/count_prev) AND ABS(sold - sold_prev/count_prev) >= 10 THEN 1
-	    WHEN (sold/count_curr < sold_prev/count_prev) AND ABS(sold/count_curr - sold_prev/count_prev) >=10 THEN 1
-	    WHEN count_curr >=10000 AND ABS(((sold/count_curr::REAL)*100)) >=20 THEN 1
+	    WHEN (sold/count_curr < sold_prev/count_prev) AND ABS(sold/count_curr::REAL - sold_prev/count_prev::REAL) >=10 THEN 1
+	    WHEN count_curr >=10000 AND ABS(sold/count_curr::REAL - sold_prev/count_prev::REAL)*100 >=20 THEN 1
 	    ELSE NULL END) IS NOT NULL
-ORDER BY pct_change asc
+ORDER BY Q070
