@@ -1,61 +1,59 @@
-﻿
-
-WITH sold_curr AS (
+﻿WITH sold_curr AS (
 SELECT
-concat(agency, RID) as ARID,
-count(sequence) as sold
-FROM hmdalar2014
+agency,
+COUNT(agency, RID) AS ARID,
+COUNT(sequence) AS sold
+FROM {table}
 WHERE
 loan_purpose = '3'
 AND action IN ( '6')
 AND property_type IN ('1', '2')
-GROUP BY 
-concat(agency, RID)),
+GROUP BY
+CONCAT(agency, RID)),
 
 orig_curr AS (
 SELECT
-concat(agency, RID) as ARID,
-count(sequence) as orig
-FROM hmdalar2014
+CONCAT(agency, RID) AS ARID,
+COUNT(sequence) AS orig
+FROM {table}
 WHERE
 loan_purpose = '3'
 AND action IN ( '1')
 AND property_type IN ('1', '2')
-GROUP BY 
-concat(agency, RID)),
+GROUP BY
+CONCAT(agency, RID)),
 
 sold_prev AS (
 SELECT
-concat(agency, RID) as ARID,
-count(sequence) as sold
-FROM hmdalar2013
+CONCAT(agency, RID) AS ARID,
+COUNT(sequence) AS sold
+FROM {table_prev}
 WHERE
 loan_purpose = '3'
 AND action IN ( '6')
 AND property_type IN ('1', '2')
-GROUP BY 
-concat(agency, RID)),
+GROUP BY
+CONCAT(agency, RID)),
 
 orig_prev AS (
 SELECT
-concat(agency, RID) as ARID,
-count(sequence) as orig
-FROM hmdalar2013
+CONCAT(agency, RID) AS ARID,
+COUNT(sequence) AS orig
+FROM {table_prev}
 WHERE
 loan_purpose = '3'
 AND action IN ( '1')
 AND property_type IN ('1', '2')
-GROUP BY 
-concat(agency, RID))
+GROUP BY
+CONCAT(agency, RID))
 
-SELECT 
-s.arid,
-(s.sold::real/(s.sold::real+o.orig::real))*100 - (s_prev.sold::real/(s_prev.sold::real+o_prev.orig::real))*100 AS Q076
+SELECT
+s.agency, s.arid, (s.sold::REAL/(s.sold::REAL+o.orig::REAL))*100 - (s_prev.sold::REAL/(s_prev.sold::REAL+o_prev.orig::REAL))*100 AS Q076
 
 FROM sold_curr s
 LEFT JOIN orig_curr o ON o.arid = s.arid
 LEFT JOIN sold_prev s_prev ON s_prev.arid = s.arid
 LEFT JOIN orig_prev o_prev on o_prev.arid = s.arid
 
-WHERE (s.sold + o.orig) > 750 
-AND ABS((s.sold::real/(s.sold::real+o.orig::real))*100 - (s_prev.sold::real/(s_prev.sold::real+o_prev.orig::real))*100) >= 20
+WHERE (s.sold + o.orig) > 750
+AND ABS((s.sold::REAL/(s.sold::REAL+o.orig::REAL))*100 - (s_prev.sold::REAL/(s_prev.sold::REAL+o_prev.orig::REAL))*100) >= 20;
