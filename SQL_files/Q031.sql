@@ -13,6 +13,6 @@ agency
 FROM {table}
 GROUP BY agency, CONCAT(agency, RID))
 
-SELECT numer.agency, numer.arid, numer.multi_count, denom.total_count
+SELECT numer.agency, numer.arid, numer.multi_count AS Q031
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE denom.total_count > 2000 AND numer.multi_count > 200;

@@ -1,7 +1,7 @@
 ﻿WITH sold_curr AS (
 SELECT
 agency,
-COUNT(agency, RID) AS ARID,
+CONCAT(agency, RID) AS ARID,
 COUNT(sequence) AS sold
 FROM {table}
 WHERE
@@ -9,7 +9,7 @@ loan_purpose = '3'
 AND action IN ( '6')
 AND property_type IN ('1', '2')
 GROUP BY
-CONCAT(agency, RID)),
+agency, CONCAT(agency, RID)),
 
 orig_curr AS (
 SELECT

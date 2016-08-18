@@ -22,7 +22,7 @@ AND loan_type IN ('2','3')
 GROUP BY agency, CONCAT(agency, rid))
 
 SELECT
-numer.agency, numer.arid, numer/denom::REAL*100
+numer.agency, numer.arid, numer/denom::REAL*100 Q073
 
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE denom >=250

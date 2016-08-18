@@ -13,6 +13,6 @@ agency
 FROM {table}
 GROUP BY agency, CONCAT(agency, RID))
 
-SELECT numer.agency, numer.arid, (numer_count/denom_count::real)*100
+SELECT numer.agency, numer.arid, (numer_count/denom_count::real)*100 AS Q048
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE (numer_count/denom_count::real)*100 >5;
