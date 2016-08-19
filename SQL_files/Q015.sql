@@ -34,5 +34,5 @@ SELECT numer_count.agency, numer_count.arid,
 FROM numer_count LEFT JOIN numer_sum ON numer_count.arid = numer_sum.arid
 LEFT JOIN denom_count ON numer_count.arid = denom_count.arid
 LEFT JOIN denom_sum ON numer_count.arid = denom_sum.arid
-WHERE (numer_count/denom_count::REAL)*100 > 10 AND (numer_sum/denom_sum::REAL)*100 >10
+WHERE (numer_count/denom_count::REAL)*100 > 10 OR (numer_sum/denom_sum::REAL)*100 >10
 ORDER BY numer_count.agency ASC;

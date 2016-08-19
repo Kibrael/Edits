@@ -18,6 +18,6 @@ AND loan_purpose = '1'
 GROUP BY agency, CONCAT(agency,rid))
 
 SELECT
-numer.agency, numer.arid, (numer_count/denom_count::REAL)*100
+numer.agency, numer.arid, (numer_count/denom_count::REAL)*100 AS Q056
 FROM numer LEFT JOIN denom ON numer.arid = denom.arid
 WHERE (numer_count/denom_count::REAL)*100 >70 AND denom_count >=50;
