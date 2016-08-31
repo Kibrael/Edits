@@ -6,7 +6,7 @@ FROM {table}
 WHERE hoepa = '1'
 AND action = '1'
 AND rate_spread::REAL >= 5
-AND rate_spread NOT LIKE '%NA%'
+AND rate_spread NOT ILIKE '%NA%'
 GROUP BY agency, CONCAT(agency,rid)),
 
 denom AS (SELECT

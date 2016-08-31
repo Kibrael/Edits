@@ -11,7 +11,7 @@ agency
 ,CONCAT(agency, RID) AS arid
 ,SUM(amount::INT) AS numer_sum
 FROM {table}
-WHERE amount NOT LIKE '%NA%'
+WHERE amount NOT ILIKE '%NA%'
 AND property_type = '3'
 GROUP BY agency, CONCAT(agency, rid)),
 
@@ -27,7 +27,7 @@ agency
 ,CONCAT(agency, RID) AS arid
 ,SUM(amount::INT) AS denom_sum
 FROM {table}
-WHERE amount NOT LIKE '%NA%'
+WHERE amount NOT ILIKE '%NA%'
 GROUP BY agency, CONCAT(agency, rid))
 SELECT numer_count.agency, numer_count.arid,
 (numer_count/denom_count::REAL)*100 AS Q015_count, (numer_sum/denom_sum::REAL) * 100 AS Q015_value

@@ -4,7 +4,7 @@ agency
 ,COUNT(sequence) AS numer_count
 FROM {table}
 WHERE income::INT < 10
-AND income NOT LIKE '%NA%'
+AND income NOT ILIKE '%NA%'
 GROUP BY agency, CONCAT(agency,rid)),
 
 denom AS (SELECT

@@ -3,7 +3,7 @@ agency
 ,CONCAT(agency,rid) AS arid
 ,COUNT(sequence) AS numer_count
 FROM {table}
-WHERE msa LIKE '%NA%'
+WHERE msa ILIKE '%NA%'
 GROUP BY agency, CONCAT(agency,rid)),
 
 denom AS (SELECT
