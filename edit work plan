@@ -2,7 +2,7 @@
 Edit Context:
 Many edits focus on conditional validity where one field (that is assumed to be correct, if not I need to think more about this process) has a set of valid values or a distribution of likely values. Data entered in the dependant field triggers the edit if that data is outside the the expected of the expected values or distribution. These are different from Validity edits as they are checking normalcy or likliness instead of factual correctness (mileage may vary).
 
-For example, if there is no co-applicant their demographic fields should be 585 not 474. These three fields move in tandem and a single field should not deviate.
+For example, if there is no co-applicant the demographic fields should be 585 not 474. These three fields move in tandem and a single field should not deviate.
 Another example includes loan type and property type. Government programs to drive home ownership are not available for multifamily homes and so property type 3 is likely invalid when combined with loan types other than 1, though there may be exceptions.
 
 Edits are often predicated on one or more fields being assumed to be correct and then checking the value of another field. If the field being checked contains a value that is not valid for the combination of fields assumed to be correct then an edit is triggered. Alternatively, if a given set of fields are assumed to be correct and another field is outside an expected distribution of values then the edit is triggered.
@@ -63,3 +63,8 @@ Macro Edits cover an entire loan file and are broken into categories by data fie
 ***Metrics with linked distributions:***
 What is the denial rate for a certain income bracket? for a loan amount bracket? for a loan amount outside the regular distribution for a given income?
 
+Notes:
+explore the data to find the appropriate outlier points and bin sizes for numeric fields (IE income, amount)
+develop linked distributions for income to loan amount
+    for both of these exercises, determine if geography can increase accuracy (by aggregating to the county level instead of national for example)
+        Also check to see if other filters increase accuracy of distributions or should have their own associated distributions (loan types, loan purposes, occupancy, etc)
