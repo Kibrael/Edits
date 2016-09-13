@@ -1,0 +1,65 @@
+
+Edit Context:
+Many edits focus on conditional validity where one field (that is assumed to be correct, if not I need to think more about this process) has a set of valid values or a distribution of likely values. Data entered in the dependant field triggers the edit if that data is outside the the expected of the expected values or distribution. These are different from Validity edits as they are checking normalcy or likliness instead of factual correctness (mileage may vary).
+
+For example, if there is no co-applicant their demographic fields should be 585 not 474. These three fields move in tandem and a single field should not deviate.
+Another example includes loan type and property type. Government programs to drive home ownership are not available for multifamily homes and so property type 3 is likely invalid when combined with loan types other than 1, though there may be exceptions.
+
+Edits are often predicated on one or more fields being assumed to be correct and then checking the value of another field. If the field being checked contains a value that is not valid for the combination of fields assumed to be correct then an edit is triggered. Alternatively, if a given set of fields are assumed to be correct and another field is outside an expected distribution of values then the edit is triggered.
+
+The method by which edits are checked is often through linked distribution, conditional probability or linked validity.
+- linked distribution refers to edits of numeric values where one or more fields have a deterministic effect on the expected distribution of another value. Such as for conventional, home purchase, single family homes the expected loan amount should be within a certain range. Using geography may give better insight into the appropriate expected range values.
+
+Quality Edits check a single LAR row or section of the TS:
+TS:
+- parent information
+- institution information
+- number of applications in LAR
+
+LAR:
+- application date
+- loan type
+- loan amount
+- action taken date
+- co applicant demographics (race ethinicity sex)
+- income
+- rate spread
+- HOEPA
+- property type
+- msa/md/state/county/tract
+
+
+Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including:
+ - rate spread
+ - action taken
+ - type of purchaser
+ - MSA/MD (this will go away)
+ - count of applications
+ - HOEPA
+ - property type
+ - loan purpose
+ - preapproval
+
+
+ **Historic Analysis:**
+1) Compute counts of fails by edit by filing year
+- this is done back through 2004 (a schema change would require significant refactoring to test the data)
+2) Determine which data fields can provide relevant context for the edits
+3) Consult with experts to understand for what each edit might be checking. Initial ideas are:
+ - portfolio specialization
+ - origination specialization
+ - securitization
+ - demographic/regional specialization
+ - validity of data for conditional distributions
+ 4) Is there information in the edit fails that can inform us about the market fragility leading to the crisis? Many edits had failure spike during the crisis indicating out of pattern market behavior.
+
+
+ **Descriptive Analysis Leading to Statistically Based Edits:**
+ Compute distributions for numeric fields for historic hmda data
+ Compute distributions for numeric fields for historic hmda data by geography to increase granularity of information
+ Compute linked distributions for numeric fields. E.G: what is the range of loan amounts for a given income?
+    - is it informative to create descriptive statistics for non numeric fields? distribution of race for income or loan amounts? could these be used for data quality?
+
+***Metrics with linked distributions:***
+What is the denial rate for a certain income bracket? for a loan amount bracket? for a loan amount outside the regular distribution for a given income?
+
