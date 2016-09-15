@@ -1,5 +1,5 @@
 
-Edit Context:
+**Edit Context:**
 Many edits focus on conditional validity where one field (that is assumed to be correct, if not I need to think more about this process) has a set of valid values or a distribution of likely values. Data entered in the dependant field triggers the edit if that data is outside the the expected of the expected values or distribution. These are different from Validity edits as they are checking normalcy or likliness instead of factual correctness (mileage may vary).
 
 For example, if there is no co-applicant the demographic fields should be 585 not 474. These three fields move in tandem and a single field should not deviate.
@@ -11,145 +11,152 @@ The method by which edits are checked is often through linked distribution, cond
 - linked distribution refers to edits of numeric values where one or more fields have a deterministic effect on the expected distribution of another value. Such as for conventional, home purchase, single family homes the expected loan amount should be within a certain range. Using geography may give better insight into the appropriate expected range values.
 
 Quality Edits check a single LAR row or section of the TS:
-TS:
+
+**TS:**
 - parent information
 - institution information
 - number of applications in LAR
 
-LAR:
-- application date
-        should be within 2 years (construction loans from Debbie's report) (q022)
-- action taken date
-        should be > 3 days from application date due to TRID/KBYO (q032) should this be validity?
-- loan type
-        fannie and freddie typically purchase conventional loans (q035)
-- loan amount: should have general distributions for each property type (q005, q036)
-        geography: Loan values vary by geography. Tract has insufficient count.
-        geography and income: geographies are likely to have specific distributions of income
-        geography, loan type, and purchaser: GSEs have loan amount limits based on county and program (FHA, VA, RSA) (q005)
-        geography and loan type: federal loan programs have geographically linked loan amount caps. Are concentrations of loan type specific to any geography? Can RSA loans be made in MSAs?
-        income: income amounts should have a related distribution of loan amounts
-        purchaser: GSEs have loan amount limits, hard cap at 417k
-        loan type: federal loan programs have value ranges. Are these based on area?
-        property type and geography: property types in certain geography levels should have specific loan amount distributions (manufactured should differ from single family and from multifamily) (q013)
-        loan type, property type, geography: federal loan programs have ranges by geography and usually exclude multifamily housing (q003, q004)
-        income to loan amount multiples (q001, q002)
-                by loan type
-        lien status, geography?: loans may have specific ranges for lien status (q037, q038)
-        loan purpose, property type, geography
-        property type, loan purpose, and geography: home purchase loans should have a minimum amount for property types in a given geography (q025)
+**LAR:**
+**Application Date**
+- should be within 2 years (construction loans from Debbie's report) (q022)
 
-- income
-        should have a geographic range (q014)
-        loan amount: loan amount / income multiples should be lower at lower income levels reflecting decreased disposable income (Q024)
-        action taken, property type (ethnicity/race/sex): for non purchased loans on single family and manufactured homes income should not be NA (q027)
-                combine this with demographics 474 for ethnicity/race/sex to reduce false positives
-        action taken, race/sex/ethnicity: income should not be populated for non natural persons (q067)
+**Action Taken Date**
+- should be > 3 days from application date due to TRID/KBYO (q032) should this be validity?
 
+**Loan Type**
+- fannie and freddie typically purchase conventional loans (q035)
 
+**Loan Amount:** should have general distributions for each property type (q005, q036)
+- geography: Loan values vary by geography. Tract has insufficient count
+- geography and income: geographies are likely to have specific distributions of income
+- geography, loan type, and purchaser: GSEs have loan amount limits based on county and program (FHA, VA, RSA) (q005)
+- geography and loan type: federal loan programs have geographically linked loan amount caps. Are concentrations of loan type specific to any geography? Can RSA loans be made in MSAs?
+- income: income amounts should have a related distribution of loan amounts
+- purchaser: GSEs have loan amount limits, hard cap at 417k
+- loan type: federal loan programs have value ranges. Are these based on area?
+- property type and geography: property types in certain geography levels should have specific loan amount distributions (manufactured should differ from single family and from multifamily) (q013)
+- loan type, property type, geography: federal loan programs have ranges by geography and usually exclude multifamily housing (q003, q004)
+- income to loan amount multiples (by loan type?) (q001, q002)
+- lien status, geography?: loans may have specific ranges for lien status (q037, q038)
+- loan purpose, property type, geography:
+- property type, loan purpose, and geography: home purchase loans should have a minimum amount for property types in a given geography (q025)
 
-- rate spread
-        action taken: should be NA for all applications that were not originated
-        purchaser type, lien status: rate spread limits by purchaser types, what are they? does lien status play a role?
-        should have an outer bound (q066)
-        should have a lower bound set by regulation 1.5 first, 3.5 subordinate
-        more research needed to know correlations
-        likely relates to FICO scores
-        Could have a relationship to income
-        Tend to be geographically concentrated?
+**Income:**
+- should have a geographic range (q014)
+- loan amount: loan amount / income multiples should be lower at lower income levels reflecting decreased disposable income (Q024)
+- action taken, property type (ethnicity/race/sex): for non purchased loans on single family and manufactured homes income should not be NA,  combine this with demographics 474 for ethnicity/race/sex to reduce false positives (as per FRB response on q083) (q027)
+- action taken, race/sex/ethnicity: income should not be populated for non natural persons (q067)
 
-- co applicant demographics (race ethinicity sex)
-            Demographics not present on single family:
+**Rate Spread:**
+- Action taken: should be NA for all applications that were not originated
+- Purchaser type, lien status: rate spread limits by purchaser types, what are they? does lien status play a role?
+- Should have an outer bound (q066)
+- Should have a lower bound set by regulation 1.5 first, 3.5 subordinate
+- More research needed to know correlations
+- Likely relates to FICO scores
+- Could have a relationship to income
+- Tend to be geographically concentrated?
 
-- HOEPA
-        action taken, rate spread: rate spread should be present for all originated HOEPA loans (q039)
-        rate spread, action taken, lien status: rate spread >= 6.5 (q044)
-        rate spread, action taken, lien status: rate spread >= 8.5 (q045)
-        race/sex/ethnicity, action taken: purchased loans with 474 demographics should not have a hoepa. does hoepa not apply to non natural persons? (q051)
-        property type: multifamily dwellings should not have hoepa (q052) should this be validity
-        purchaser type: fannie and freddie should not have purchased hoepa loans (q064) is this a hard rule? should it be validity?
-        how direct is the relationship between hoepa and rate spread? is 6.5 or greater rate spread certain to trigger hoepa?
-        check relationship to income
+**Co-applicant demographics (race ethinicity sex):**
+- Demographics not present on single family applications: demographics popultion should be higher than on multifamily. Should also be higher when owner occupied.
 
-- property type:
-        loan type: federal loan programs are not available for multifamily property. (q059) should this be validity?
-- msa/md/state/county/tract:
-        preapproval: if preapproval was requested is it for a specific property or is it for an amount? if it is for a property it should not have NA in the geography fields (q049)
-        valid reported state/county (when small county) or state/county/tract should have MSA reported when appropriate (q029)
+**HOEPA:**
+- action taken, rate spread: rate spread should be present for all originated HOEPA loans (q039)
+- rate spread, action taken, lien status: rate spread >= 6.5 (q044)
+- rate spread, action taken, lien status: rate spread >= 8.5 (q045)
+- race/sex/ethnicity, action taken: purchased loans with 474 demographics should not have a hoepa. does hoepa not apply to non natural persons? (q051)
+- property type: multifamily dwellings should not have hoepa (q052) should this be validity
+- purchaser type: fannie and freddie should not have purchased hoepa loans (q064) is this a hard rule? should it be validity?
+- how direct is the relationship between hoepa and rate spread? is 6.5 or greater rate spread certain to trigger hoepa?
+- check relationship to income
 
-
-### Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including: ###
- - rate spread
-        HOEPA, action taken: concentration of hoepa loans with rate spreads above xx%. Does this show market specialization? purchases my show risk concentration, increases in hoepa/rate spread lending indicate non-prime borrowers or non-prime terms for prime borrowers (q055)
-        property type, lien status, action taken: segmenting rate spread analysis by property type adjusts the relative risk pricing for single family vs manufactured housing (q061)
-
- - action taken:
-        percentage of approved but not accepted applications should be within a certain range (q007)
-        percentage of withdrawn applications should be within a certain percentage (q008)
-        percentage of incomplete applications should be within a certain percentage (q009)
-        approvals should represent a certain percentage of other action types- exclude preapprovals? exclude purchases? (q010)
-        denial rate should be consistent and non-zero (over time? by area? both?) (q056, q058)
-        race/sex/ethnicity: should be consistently populated on a percentage of loans where definite action was taken (1,2,3). Is there a valid relationship between FI action (1,2,3) and borrower action (4,5)? should FI action be a percent of the total? is this percent consistent? (q080, q081, q082, q083)
-                I think this edit is checking for population of demographic field where the FI made a decision
- - type of purchaser
-    sales of purchase and refinance loans to the GSEs should be consisten (by GSE) over time. higher variance may be expected for larger volumes (q070) does this need to scale with lender activity or national activity? (q070, q071, q072)
-    for originated or purchased, non-multifamily, VA and FHA loans, the percentage sold should have a relationship to the percentage purchased (q073, q074, q075, q076)
-            are loan purchases of VA and FHA loans stable by institution over time?
+**property type:**
+- Loan type: federal loan programs are not available for multifamily property. (q059) should this be validity?
+- MSA/MD/State/County/Tract:
+- Preapproval: if preapproval was requested is it for a specific property or is it for an amount? if it is for a property it should not have NA in the geography fields (q049)
+- Valid reported state/county (when small county) or state/county/tract should have MSA reported when appropriate (q029)
 
 
- - MSA/MD (this will go away):
-        MSAs reported as NA should be representative of previous patterns and/or geography
+#### Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including:
+ **Rate Spread:**
+- HOEPA, action taken: concentration of hoepa loans with rate spreads above xx%. Does this show market specialization? purchases my show risk concentration, increases in hoepa/rate spread lending indicate non-prime borrowers or non-prime terms for prime borrowers (q055)
 
- - count of applications
-        determine count of applications that creates a threshold for stable year to year volume, what is the distribution of annual change (q011)
-        flag institutions that acquire or were acquired and change their expected count accordingly
-- income:
-        msa/state/county: application's stated incomes should be representative of the geography (qo16)
-        loan purpose, loan type: application's stated incomes should likely have a minimum by loan purpose/type (q016)
- - HOEPA:
-        agency, action taken: what % of lending activity do HOEPA loans represent for credit unions? (q053)
-        agency, aciton taken: what % of purchasing activity do HOEPA loans represent for credit unions? (q054)
-                what is the risk associated with credit unions increasing hoepa activity?
-        action taken, lien status, purchaser: HOEPA loans sold to a fannie or freddie should be less than 1% of all originated loans (q062, q063)
-        count of HOEPA should not change dramatically or exceed a certain percentage of originated or purchased loans, high concentration may indicate market focus (q065)
+- Property type, lien status, action taken: segmenting rate spread analysis by property type adjusts the relative risk pricing for single family vs manufactured housing (q061)
 
- - property type:
-        multifamily lending count changes (for lenders above loan count threshold? need a way to reduce false positives) (q031)
-        multifamily loan amount changes (for lenders above a loan amount threshold? need a way to reduce false positives) (q015)
+**Action Taken:**
+- Percentage of approved but not accepted applications should be within a certain range (q007)
+- Percentage of withdrawn applications should be within a certain percentage (q008)
+- Percentage of incomplete applications should be within a certain percentage (q009)
+- Approvals should represent a certain percentage of other action types- exclude preapprovals? exclude purchases? (q010)
+- Denial rate should be consistent and non-zero (over time? by area? both?) (q056, q058)
+- Race/sex/ethnicity: should be consistently populated on a percentage of loans where definite action was taken (1,2,3). Is there a valid relationship between FI action (1,2,3) and borrower action (4,5)? should FI action be a percent of the total? is this percent consistent? (q080, q081, q082, q083)
+*I think this edit is checking for population of demographic field where the FI made a decision*
 
- - loan purpose:
-        action taken: approved home purchase loans should not represent more than a certain percent of portfolio (upper statistical bound) (q006)
+**Type of Purchaser:**
+- Sales of purchase and refinance loans to the GSEs should be consisten (by GSE) over time. higher variance may be expected for larger volumes (q070)
+- Does this need to scale with lender activity or national activity? (q070, q071, q072)
+- For originated or purchased, non-multifamily, VA and FHA loans, the percentage sold should have a relationship to the percentage purchased (q073, q074, q075, q076)
+- Are loan purchases of VA and FHA loans stable by institution over time?
 
- - preapproval:
-        action taken: withdrawn preapprovals should be within a certain percentage range for the total applications (q047). does this relate to steering? misunderstanding of preapproval definition?
-        action taken: incomplete preapprovals should be within a certain percentage range for the total applications (q048). steering?
+
+**MSA/MD:** *(this will go away)*
+- MSAs reported as NA should be representative of previous patterns and/or geography
+- Count of applications: determine count of applications that creates a threshold for stable year to year volume, what is the distribution of annual change (q011)
+    - Flag institutions that acquire or were acquired and change their expected count accordingly
+
+**Income:**
+- MSA/State/County: application's stated incomes should be representative of the geography (qo16)
+- Loan purpose, loan type: application's stated incomes should likely have a minimum by loan purpose/type (q016)
+
+**HOEPA:**
+- Agency, action taken: what % of lending activity do HOEPA loans represent for credit unions? (q053)
+- Agency, aciton taken: what % of purchasing activity do HOEPA loans represent for credit unions? (q054)
+- What is the risk associated with credit unions increasing hoepa activity?
+- Action taken, lien status, purchaser: HOEPA loans sold to a Fannie or Freddie should be less than 1% of all originated loans (q062, q063)
+- Count of HOEPA should not change dramatically or exceed a certain percentage of originated or purchased loans, high concentration may indicate market focus (q065)
+
+**Property Type:**
+- Multifamily lending count changes (for lenders above loan count threshold? need a way to reduce false positives) (q031)
+- Multifamily loan amount changes (for lenders above a loan amount threshold? need a way to reduce false positives) (q015)
+
+**Loan Purpose:**
+- Action taken: approved home purchase loans should not represent more than a certain percent of portfolio (upper statistical bound) (q006)
+
+**Preapproval:**
+- Action taken: withdrawn preapprovals should be within a certain percentage range for the total applications (q047). does this relate to steering? misunderstanding of preapproval definition?
+- Action taken: incomplete preapprovals should be within a certain percentage range for the total applications (q048). steering?
 
 
 
  **Historic Analysis:**
 1) Compute counts of fails by edit by filing year
-- this is done back through 2004 (a schema change would require significant refactoring to test the data)
+    - this is done back through 2004 (a schema change would require significant refactoring to test the data)
 2) Determine which data fields can provide relevant context for the edits
 3) Consult with experts to understand for what each edit might be checking. Initial ideas are:
- - portfolio specialization
- - origination specialization
- - securitization
- - demographic/regional specialization
- - validity of data for conditional distributions
+    - Portfolio specialization
+    - Origination specialization
+    - Securitization
+    - Demographic/regional specialization
+    - Validity of data for conditional distributions
+    - Steering (preapproval, action taken)
+    - Sufficient population of demographic fields
+    - Valid population of demographic fields
+
  4) Is there information in the edit fails that can inform us about the market fragility leading to the crisis? Many edits had failure spike during the crisis indicating out of pattern market behavior.
 
 
  **Descriptive Analysis Leading to Statistically Based Edits:**
- Compute distributions for numeric fields for historic hmda data
- Compute distributions for numeric fields for historic hmda data by geography to increase granularity of information
- Compute linked distributions for numeric fields. E.G: what is the range of loan amounts for a given income?
-    - is it informative to create descriptive statistics for non numeric fields? distribution of race for income or loan amounts? could these be used for data quality?
+- Compute distributions for numeric fields for historic hmda data
+- Compute distributions for numeric fields for historic hmda data by geography to increase granularity of information
+- Compute linked distributions for numeric fields. E.G: what is the range of loan amounts for a given income?
+- Is it informative to create descriptive statistics for non numeric fields? distribution of race for income or loan amounts? could these be used for data quality?
 
 ***Metrics with linked distributions:***
 What is the denial rate for a certain income bracket? for a loan amount bracket? for a loan amount outside the regular distribution for a given income?
 
-Notes:
-explore the data to find the appropriate outlier points and bin sizes for numeric fields (IE income, amount)
-develop linked distributions for income to loan amount
+*Notes:*
+- Explore the data to find the appropriate outlier points and bin sizes for numeric fields (IE income, amount)
+- Develop linked distributions for income to loan amount
     for both of these exercises, determine if geography can increase accuracy (by aggregating to the county level instead of national for example)
-        Also check to see if other filters increase accuracy of distributions or should have their own associated distributions (loan types, loan purposes, occupancy, etc)
+    -    Also check to see if other filters increase accuracy of distributions or should have their own associated distributions (loan types, loan purposes, occupancy, etc)
