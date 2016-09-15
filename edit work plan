@@ -78,24 +78,48 @@ LAR:
         valid reported state/county (when small county) or state/county/tract should have MSA reported when appropriate (q029)
 
 
-Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including:
+### Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including: ###
  - rate spread
+        HOEPA, action taken: concentration of hoepa loans with rate spreads above xx%. Does this show market specialization? purchases my show risk concentration, increases in hoepa/rate spread lending indicate non-prime borrowers or non-prime terms for prime borrowers (q055)
+        property type, lien status, action taken: segmenting rate spread analysis by property type adjusts the relative risk pricing for single family vs manufactured housing (q061)
+
  - action taken:
         percentage of approved but not accepted applications should be within a certain range (q007)
         percentage of withdrawn applications should be within a certain percentage (q008)
         percentage of incomplete applications should be within a certain percentage (q009)
         approvals should represent a certain percentage of other action types- exclude preapprovals? exclude purchases? (q010)
-
+        denial rate should be consistent and non-zero (over time? by area? both?) (q056, q058)
+        race/sex/ethnicity: should be consistently populated on a percentage of loans where definite action was taken (1,2,3). Is there a valid relationship between FI action (1,2,3) and borrower action (4,5)? should FI action be a percent of the total? is this percent consistent? (q080, q081, q082, q083)
+                I think this edit is checking for population of demographic field where the FI made a decision
  - type of purchaser
- - MSA/MD (this will go away)
+    sales of purchase and refinance loans to the GSEs should be consisten (by GSE) over time. higher variance may be expected for larger volumes (q070) does this need to scale with lender activity or national activity? (q070, q071, q072)
+    for originated or purchased, non-multifamily, VA and FHA loans, the percentage sold should have a relationship to the percentage purchased (q073, q074, q075, q076)
+            are loan purchases of VA and FHA loans stable by institution over time?
+
+
+ - MSA/MD (this will go away):
+        MSAs reported as NA should be representative of previous patterns and/or geography
+
  - count of applications
- - HOEPA
+        determine count of applications that creates a threshold for stable year to year volume, what is the distribution of annual change (q011)
+        flag institutions that acquire or were acquired and change their expected count accordingly
+- income:
+        msa/state/county: application's stated incomes should be representative of the geography (qo16)
+        loan purpose, loan type: application's stated incomes should likely have a minimum by loan purpose/type (q016)
+ - HOEPA:
+        agency, action taken: what % of lending activity do HOEPA loans represent for credit unions? (q053)
+        agency, aciton taken: what % of purchasing activity do HOEPA loans represent for credit unions? (q054)
+                what is the risk associated with credit unions increasing hoepa activity?
+        action taken, lien status, purchaser: HOEPA loans sold to a fannie or freddie should be less than 1% of all originated loans (q062, q063)
+        count of HOEPA should not change dramatically or exceed a certain percentage of originated or purchased loans, high concentration may indicate market focus (q065)
+
  - property type:
         multifamily lending count changes (for lenders above loan count threshold? need a way to reduce false positives) (q031)
         multifamily loan amount changes (for lenders above a loan amount threshold? need a way to reduce false positives) (q015)
 
  - loan purpose:
         action taken: approved home purchase loans should not represent more than a certain percent of portfolio (upper statistical bound) (q006)
+
  - preapproval:
         action taken: withdrawn preapprovals should be within a certain percentage range for the total applications (q047). does this relate to steering? misunderstanding of preapproval definition?
         action taken: incomplete preapprovals should be within a certain percentage range for the total applications (q048). steering?
