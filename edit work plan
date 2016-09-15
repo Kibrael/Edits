@@ -18,27 +18,88 @@ TS:
 
 LAR:
 - application date
-- loan type
-- loan amount
+        should be within 2 years (construction loans from Debbie's report) (q022)
 - action taken date
-- co applicant demographics (race ethinicity sex)
+        should be > 3 days from application date due to TRID/KBYO (q032) should this be validity?
+- loan type
+        fannie and freddie typically purchase conventional loans (q035)
+- loan amount: should have general distributions for each property type (q005, q036)
+        geography: Loan values vary by geography. Tract has insufficient count.
+        geography and income: geographies are likely to have specific distributions of income
+        geography, loan type, and purchaser: GSEs have loan amount limits based on county and program (FHA, VA, RSA) (q005)
+        geography and loan type: federal loan programs have geographically linked loan amount caps. Are concentrations of loan type specific to any geography? Can RSA loans be made in MSAs?
+        income: income amounts should have a related distribution of loan amounts
+        purchaser: GSEs have loan amount limits, hard cap at 417k
+        loan type: federal loan programs have value ranges. Are these based on area?
+        property type and geography: property types in certain geography levels should have specific loan amount distributions (manufactured should differ from single family and from multifamily) (q013)
+        loan type, property type, geography: federal loan programs have ranges by geography and usually exclude multifamily housing (q003, q004)
+        income to loan amount multiples (q001, q002)
+                by loan type
+        lien status, geography?: loans may have specific ranges for lien status (q037, q038)
+        loan purpose, property type, geography
+        property type, loan purpose, and geography: home purchase loans should have a minimum amount for property types in a given geography (q025)
+
 - income
+        should have a geographic range (q014)
+        loan amount: loan amount / income multiples should be lower at lower income levels reflecting decreased disposable income (Q024)
+        action taken, property type (ethnicity/race/sex): for non purchased loans on single family and manufactured homes income should not be NA (q027)
+                combine this with demographics 474 for ethnicity/race/sex to reduce false positives
+        action taken, race/sex/ethnicity: income should not be populated for non natural persons (q067)
+
+
+
 - rate spread
+        action taken: should be NA for all applications that were not originated
+        purchaser type, lien status: rate spread limits by purchaser types, what are they? does lien status play a role?
+        should have an outer bound (q066)
+        should have a lower bound set by regulation 1.5 first, 3.5 subordinate
+        more research needed to know correlations
+        likely relates to FICO scores
+        Could have a relationship to income
+        Tend to be geographically concentrated?
+
+- co applicant demographics (race ethinicity sex)
+            Demographics not present on single family:
+
 - HOEPA
-- property type
-- msa/md/state/county/tract
+        action taken, rate spread: rate spread should be present for all originated HOEPA loans (q039)
+        rate spread, action taken, lien status: rate spread >= 6.5 (q044)
+        rate spread, action taken, lien status: rate spread >= 8.5 (q045)
+        race/sex/ethnicity, action taken: purchased loans with 474 demographics should not have a hoepa. does hoepa not apply to non natural persons? (q051)
+        property type: multifamily dwellings should not have hoepa (q052) should this be validity
+        purchaser type: fannie and freddie should not have purchased hoepa loans (q064) is this a hard rule? should it be validity?
+        how direct is the relationship between hoepa and rate spread? is 6.5 or greater rate spread certain to trigger hoepa?
+        check relationship to income
+
+- property type:
+        loan type: federal loan programs are not available for multifamily property. (q059) should this be validity?
+- msa/md/state/county/tract:
+        preapproval: if preapproval was requested is it for a specific property or is it for an amount? if it is for a property it should not have NA in the geography fields (q049)
+        valid reported state/county (when small county) or state/county/tract should have MSA reported when appropriate (q029)
 
 
 Macro Edits cover an entire loan file and are broken into categories by data field or aggregates, including:
  - rate spread
- - action taken
+ - action taken:
+        percentage of approved but not accepted applications should be within a certain range (q007)
+        percentage of withdrawn applications should be within a certain percentage (q008)
+        percentage of incomplete applications should be within a certain percentage (q009)
+        approvals should represent a certain percentage of other action types- exclude preapprovals? exclude purchases? (q010)
+
  - type of purchaser
  - MSA/MD (this will go away)
  - count of applications
  - HOEPA
- - property type
- - loan purpose
- - preapproval
+ - property type:
+        multifamily lending count changes (for lenders above loan count threshold? need a way to reduce false positives) (q031)
+        multifamily loan amount changes (for lenders above a loan amount threshold? need a way to reduce false positives) (q015)
+
+ - loan purpose:
+        action taken: approved home purchase loans should not represent more than a certain percent of portfolio (upper statistical bound) (q006)
+ - preapproval:
+        action taken: withdrawn preapprovals should be within a certain percentage range for the total applications (q047). does this relate to steering? misunderstanding of preapproval definition?
+        action taken: incomplete preapprovals should be within a certain percentage range for the total applications (q048). steering?
+
 
 
  **Historic Analysis:**
