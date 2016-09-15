@@ -8,7 +8,7 @@ Another example includes loan type and property type. Government programs to dri
 Edits are often predicated on one or more fields being assumed to be correct and then checking the value of another field. If the field being checked contains a value that is not valid for the combination of fields assumed to be correct then an edit is triggered. Alternatively, if a given set of fields are assumed to be correct and another field is outside an expected distribution of values then the edit is triggered.
 
 The method by which edits are checked is often through linked distribution, conditional probability or linked validity.
-- linked distribution refers to edits of numeric values where one or more fields have a deterministic effect on the expected distribution of another value. Such as for conventional, home purchase, single family homes the expected loan amount should be within a certain range. Using geography may give better insight into the appropriate expected range values.
+- Linked distribution refers to edits of numeric values where one or more fields have a deterministic effect on the expected distribution of another value. Such as for conventional, home purchase, single family homes the expected loan amount should be within a certain range. Using geography may give better insight into the appropriate expected range values.
 
 Quality Edits check a single LAR row or section of the TS:
 
@@ -43,10 +43,10 @@ Quality Edits check a single LAR row or section of the TS:
 - property type, loan purpose, and geography: home purchase loans should have a minimum amount for property types in a given geography (q025)
 
 **Income:**
-- should have a geographic range (q014)
-- loan amount: loan amount / income multiples should be lower at lower income levels reflecting decreased disposable income (Q024)
-- action taken, property type (ethnicity/race/sex): for non purchased loans on single family and manufactured homes income should not be NA,  combine this with demographics 474 for ethnicity/race/sex to reduce false positives (as per FRB response on q083) (q027)
-- action taken, race/sex/ethnicity: income should not be populated for non natural persons (q067)
+- Should have a geographic range (q014)
+- Loan amount: loan amount / income multiples should be lower at lower income levels reflecting decreased disposable income (Q024)
+- Action taken, property type (ethnicity/race/sex): for non purchased loans on single family and manufactured homes income should not be NA,  combine this with demographics 474 for ethnicity/race/sex to reduce false positives (as per FRB response on q083) (q027)
+- Action taken, race/sex/ethnicity: income should not be populated for non natural persons (q067)
 
 **Rate Spread:**
 - Action taken: should be NA for all applications that were not originated
