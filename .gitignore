@@ -1,2 +1,3 @@
 *.pyc
 data/
+linked_dist_stats/distribution_row_edit_fails.csv
